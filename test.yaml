@@ -1,18 +1,20 @@
----
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: board-api
-  namespace: dev
+  name: testdev
+  namespace: default
+  labels:
+    app: testdev
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: board-api
+       app: board
   template:
     metadata:
       labels:
-        app: board-api
+        app: board
     spec:
       containers:
       - name: board-api
@@ -20,15 +22,23 @@ spec:
         ports:
         - containerPort: 8081
           name: app
+      - name: board-app
+        image: docker.io/aak1009/react-board
+        ports:
+        - containerPort: 80
+      restartPolicy: Always
+
 ---
+
 apiVersion: v1
 kind: Service
 metadata:
-  name: board-api
-  namespace: dev
-spec: 
+  name: board-app
+spec:
+  type: LoadBalancer
   ports:
-  - port: 8081
+  - port: 80
+    targetPort: 80
+    protocol: TCP
   selector:
-    app: board-api
-
+    app: testdev
