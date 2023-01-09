@@ -18,14 +18,17 @@ spec:
     spec:
       containers:
       - name: board-api
+        imagePullPolicy: Always
         image: docker.io/aak1009/goserver
         ports:
         - containerPort: 8081
-          name: app
+          protocol: TCP
       - name: board-app
         image: docker.io/aak1009/react-board
+        imagePullPolicy: Always
         ports:
         - containerPort: 80
+          protocol: TCP
       restartPolicy: Always
 
 ---
@@ -33,7 +36,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: board-app
+  name: testservice
 spec:
   type: LoadBalancer
   ports:
@@ -41,4 +44,4 @@ spec:
     targetPort: 80
     protocol: TCP
   selector:
-    app: testdev
+    app: board
