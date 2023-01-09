@@ -1,0 +1,33 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: board-app
+  namespace: dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: board-app
+  template:
+    metadata:
+      labels:
+        app: board-app
+    spec:
+      containers:
+      - name: board-app
+        image: docker.io/aak1009/react-board
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: board-app
+  namespace: dev
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+  selector:
+    app: board-app
