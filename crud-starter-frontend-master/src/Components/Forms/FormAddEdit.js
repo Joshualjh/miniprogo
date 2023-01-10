@@ -73,7 +73,6 @@ class AddEditForm extends React.Component {
         }
       })
       .catch(err => console.log(err))
-      window.location.reload();
   }
 
   componentDidMount(){

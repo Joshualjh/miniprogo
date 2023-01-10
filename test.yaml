@@ -1,11 +1,11 @@
-
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: testdev
+  name: board
   namespace: default
   labels:
-    app: testdev
+    app: board
 spec:
   replicas: 1
   selector:
@@ -17,22 +17,20 @@ spec:
         app: board
     spec:
       containers:
-      - name: board-api
+      - name: goserver
         imagePullPolicy: Always
         image: docker.io/aak1009/goserver
         ports:
         - containerPort: 8081
           protocol: TCP
-      - name: board-app
+      - name: react-board
         image: docker.io/aak1009/react-board
         imagePullPolicy: Always
         ports:
         - containerPort: 80
           protocol: TCP
       restartPolicy: Always
-
 ---
-
 apiVersion: v1
 kind: Service
 metadata:

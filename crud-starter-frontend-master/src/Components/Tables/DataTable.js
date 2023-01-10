@@ -22,7 +22,6 @@ class DataTable extends Component {
       })
       .catch(err => console.log(err))
     }
-    window.location.reload();
   }
 
   render() {
