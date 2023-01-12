@@ -29,7 +29,6 @@ stages:
           $(tag)
 - stage: 'dev'
   displayName: Deploy to VM
-  dependsOn: Build
   jobs: 
   - deployment: Deploy
     pool:
