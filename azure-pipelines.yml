@@ -27,3 +27,14 @@ stages:
         dockerfile: '$(Build.SourcesDirectory)/crud-starter-frontend-master/Dockerfile'
         tags: |
           $(tag)
+
+  - deployment: VMDeploy
+    displayName: Deploy to VM
+    environment: 
+     name: test
+     resourceType: VirtualMachine
+    strategy:
+       runOnce:
+          deploy:   
+            steps:
+              - script: docker run '$(Build.BuildId)' -p 8080:8080
