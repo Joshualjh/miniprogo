@@ -11,8 +11,17 @@ resources:
 
 
 stages:
-- stage: deploy
-  displayName: Build image
+# - stage: 'Build'
+#   displayName: 'Build the application'
+#   jobs:
+#   - job: 'Build'
+#     displayName: 'Build job'
+#     pool:
+#       vmImages: 'ubuntu-20.04'
+
+- stage: 'DEV'
+  displayName: 'Deploy to the dev environment'
+  # dependsOn: Build
   jobs:
   - deployment: VMDeploy
     displayName: Deploy to VM
@@ -23,7 +32,7 @@ stages:
        runOnce:
           deploy:   
             steps:
-              - script: apt-get update && sudo apt-get upgrade -y
+              - script: mkdir ~/.ssh/test
   
 
 # - task: AzureKeyVault@2
