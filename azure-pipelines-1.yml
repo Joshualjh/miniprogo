@@ -23,7 +23,7 @@ stages:
        runOnce:
           deploy:   
             steps:
-              - script: apt-get install nginx
+              - script: apt-get install -y nginx
   
 
 # - task: AzureKeyVault@2
