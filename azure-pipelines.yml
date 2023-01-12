@@ -27,12 +27,11 @@ stages:
         dockerfile: '$(Build.SourcesDirectory)/crud-starter-frontend-master/Dockerfile'
         tags: |
           $(tag)
+
 - stage: 'dev'
   displayName: Deploy to VM
   jobs: 
   - deployment: Deploy
-    pool:
-      vmImages: 'ubuntu-20.04'
     environment: 
      name: test123
      resourceType: VirtualMachine
@@ -40,5 +39,5 @@ stages:
          runOnce:
            deploy:
              steps:
-               - script: docker run '$(Build.BuildId)' -p 8080:8080
+               - script: docker run $(tag) -p 8080:8080
         
