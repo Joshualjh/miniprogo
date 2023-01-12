@@ -12,7 +12,7 @@ variables:
   tag: '$(Build.BuildId)'
 
 stages:
-- stage: Build
+- stage: 'Build'
   displayName: Build image
   jobs:
   - job: Build
@@ -27,14 +27,19 @@ stages:
         dockerfile: '$(Build.SourcesDirectory)/crud-starter-frontend-master/Dockerfile'
         tags: |
           $(tag)
-
-  - deployment: VMDeploy
-    displayName: Deploy to VM
+- stage: 'dev'
+  displayName: Deploy to VM
+  dependsOn: Build
+  jobs: 
+  - deployment: Deploy
+    pool:
+      vmImages: 'ubuntu-20.04'
     environment: 
-     name: test
+     name: test123
      resourceType: VirtualMachine
     strategy:
-       runOnce:
-          deploy:   
-            steps:
-              - script: docker run '$(Build.BuildId)' -p 8080:8080
+         runOnce:
+           deploy:
+             steps:
+               - script: docker run '$(Build.BuildId)' -p 8080:8080
+        
